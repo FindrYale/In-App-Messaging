@@ -1,5 +1,10 @@
 package edu.yale.cpsc112_lesson1;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.firebase.client.Firebase;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +20,20 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Firebase.setAndroidContext(this);
 		setContentView(R.layout.activity_main);
-
+		 Firebase ref = new Firebase("https://fiery-heat-5866.firebaseio.com/");
+		 String itemLost = "My Head";
+		 String Location = "On my body";
+		 ref.child(itemLost).setValue(Location);
+		 /*
+		 Map<String,String> map2 = new HashMap <String, String> ();
+		 String itemLost = "My Head";  
+ 		 String location = "On body"; 
+ 		 map2.put(itemLost, location); 
+		 System.out.println("PrintOutput");
+		 Firebase map1Ref = ref.child("map2");*/
+		 
 		button = (Button) findViewById(R.id.button);
 
 		button.setOnClickListener(new OnClickListener() {
@@ -37,6 +54,7 @@ public class MainActivity extends Activity {
 					e.printStackTrace();
 				}
 			}
-		});
+		}); //why is this semi-colon here. What is this the syntax off?  
+		
 	}
 }
