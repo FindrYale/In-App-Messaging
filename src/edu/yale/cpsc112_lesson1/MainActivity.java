@@ -23,10 +23,12 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				String saransNumber = "9546873395";
 
 				try {
 
 					Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+					smsIntent.putExtra("address", saransNumber);
 					smsIntent.putExtra("sms_body", "Hello, World");
 					smsIntent.setType("vnd.android-dir/mms-sms");
 					startActivity(smsIntent);
