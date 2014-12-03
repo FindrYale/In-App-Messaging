@@ -1,13 +1,22 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
-    <Button
+    android:orientation="vertical"> 
+     
+    <fragment         
+          android:id="@+id/map"
+          android:layout_width="match_parent"
+          android:layout_height="300dp"
+          android:name="com.google.android.gms.maps.MapFragment"
+          class="com.google.android.gms.maps.SupportMapFragment"/>
+   
+   <Button
         android:id="@+id/button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Send" />
-
+   
+  
 </LinearLayout>
