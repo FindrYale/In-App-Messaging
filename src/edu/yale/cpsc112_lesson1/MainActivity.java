@@ -25,8 +25,9 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Firebase.setAndroidContext(this);
 		setContentView(R.layout.activity_main);
+		Firebase.setAndroidContext(this);
+		
 		 Firebase ref = new Firebase("https://fiery-heat-5866.firebaseio.com/");
 		 String itemLost = "My Head";
 		 String Location = "On my body";
@@ -40,15 +41,17 @@ public class MainActivity extends Activity {
  		 map2.put(itemLost, location); 
 		 System.out.println("PrintOutput");
 		 Firebase map1Ref = ref.child("map2");*/
-		 ref.child(itemLost).addValueEventListener(new ValueEventListener () {
+		/* ref.child(itemLost).addValueEventListener(new ValueEventListener () {
 		 public void onDataChange(DataSnapshot snapshot) {
 			 System.out.println(snapshot.getValue());
+			 String outputLocation;
+			 outputLocation = snapshot.toString();
 		 }
 		 public void onCancelled(FirebaseError error) {
 			 
 		 }
 		
-		 });
+		 });*/
 		 
 		button = (Button) findViewById(R.id.button);
 
