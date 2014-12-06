@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
  		 map2.put(itemLost, location); 
 		 System.out.println("PrintOutput");
 		 Firebase map1Ref = ref.child("map2");*/
-		/* ref.child(itemLost).addValueEventListener(new ValueEventListener () {
+		ref.child(itemLost).addValueEventListener(new ValueEventListener () {
 		 public void onDataChange(DataSnapshot snapshot) {
 			 System.out.println(snapshot.getValue());
 			 String outputLocation;
@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
 			 
 		 }
 		
-		 });*/
+		 });
 		 
 		button = (Button) findViewById(R.id.button);
 
