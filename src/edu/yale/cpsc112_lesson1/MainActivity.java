@@ -7,19 +7,38 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 import android.app.Activity;
 import android.os.Bundle;
+import com.google.android.gms.maps.MapFragment;
+
 
 public class MainActivity extends Activity {
-
+	 static final LatLng oldCampus = new LatLng(41.3085 , 72.9285);
+	 private GoogleMap googleMap;
+	 private Marker marker;
+	// Double x = 0.0;
+	 //Double y = 0.0;
+	 String LocationFinal = "";
+	 LatLng xyz;
 	Button button;
 
 	@Override
@@ -29,9 +48,33 @@ public class MainActivity extends Activity {
 		Firebase.setAndroidContext(this);
 		
 		 Firebase ref = new Firebase("https://fiery-heat-5866.firebaseio.com/");
+			try { 
+	            if (googleMap == null) {
+	               googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+	            }
+	         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+	         //Marker TP = googleMap.addMarker(new MarkerOptions().position(oldCampus).title("oldCampus"));
+	         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(oldCampus, 10));
+	        
+	         googleMap.setOnMapClickListener(new OnMapClickListener () { 
+	        	 public void onMapClick(LatLng point) {
+	        		 Log.d("Map","Map clicked");
+	        		 LocationFinal = point.toString();
+	        		
+	        		
+	        	 }
+	         }
+	         
+	        		 );
+	   
+	      } catch (Exception e) {
+	    	  
+	         e.printStackTrace();
+	      }
 		 String itemLost = "My Head";
-		 String Location = "On my body";
-		 ref.child(itemLost).setValue(Location);
+		 //String Location = "On my body";
+
+		 ref.child(itemLost).setValue(LocationFinal);
 		 
 		
 		 /*
@@ -52,7 +95,9 @@ public class MainActivity extends Activity {
 		 }
 		
 		 });
-		 
+		
+	
+
 		button = (Button) findViewById(R.id.button);
 
 		button.setOnClickListener(new OnClickListener() {
