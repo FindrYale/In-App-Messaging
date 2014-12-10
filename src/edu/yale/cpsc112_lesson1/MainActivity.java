@@ -15,6 +15,7 @@ import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -25,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Activity;
 import android.os.Bundle;
@@ -32,13 +34,19 @@ import com.google.android.gms.maps.MapFragment;
 
 
 public class MainActivity extends Activity {
-	 static final LatLng oldCampus = new LatLng(41.3085 , 72.9285);
+	 static final LatLng oldCampus = new LatLng(41.3085 , -72.9285);
+	 //41.3085 , 72.9285);
 	 private GoogleMap googleMap;
 	 private Marker marker;
-	// Double x = 0.0;
-	 //Double y = 0.0;
-	 String LocationFinal = "";
+	 private LatLngBounds OLDCAMPUS = new LatLngBounds( 
+			 //new LatLng (41.3085 , 72.9285), new LatLng (42.3085 , 73.9285));
+	 new LatLng (0 ,0), new LatLng (1 , 1));
+	 Double x = 0.0;
+	 Double y = 0.0;
+	 String LocationFinal = "SAJ";
 	 LatLng xyz;
+	 String itemLost = "My Head";
+
 	Button button;
 
 	@Override
@@ -46,23 +54,33 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		Firebase.setAndroidContext(this);
-		
-		 Firebase ref = new Firebase("https://fiery-heat-5866.firebaseio.com/");
+		Firebase ref = new Firebase("https://fiery-heat-5866.firebaseio.com/");
+		 
 			try { 
 	            if (googleMap == null) {
 	               googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 	            }
-	         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+	         //googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 	         //Marker TP = googleMap.addMarker(new MarkerOptions().position(oldCampus).title("oldCampus"));
-	         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(oldCampus, 10));
+	        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(oldCampus, 15));
+	        //googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(OLDCAMPUS,14));
 	        
 	         googleMap.setOnMapClickListener(new OnMapClickListener () { 
 	        	 public void onMapClick(LatLng point) {
-	        		 Log.d("Map","Map clicked");
-	        		 LocationFinal = point.toString();
-	        		
-	        		
+	        		Log.d("Map","Map clicked");
+	        		LocationFinal = point.toString(); 
+	        		// x = Double.valueOf(point.latitude); //pointlatitude 
+	        		// y = Double.valueOf(point.longitude); //pointlatitude
+	        	//Textbox
+	        		TextView myTextView = (TextView) findViewById(R.id.textView1);
+	        		myTextView.setText(LocationFinal);
+	        	//Textbox
+	        	//Firebase 
+	        		Firebase ref = new Firebase("https://fiery-heat-5866.firebaseio.com/");
+	        		ref.child(itemLost).setValue(LocationFinal);
+	        	//Firebase 	
 	        	 }
+	        		
 	         }
 	         
 	        		 );
@@ -71,10 +89,15 @@ public class MainActivity extends Activity {
 	    	  
 	         e.printStackTrace();
 	      }
-		 String itemLost = "My Head";
+        	
+			
+		//Outputting to textbox 
+			
+			
+		//end of textbox 	
 		 //String Location = "On my body";
 
-		 ref.child(itemLost).setValue(LocationFinal);
+		// ref.child(itemLost).setValue(LocationFinal);
 		 
 		
 		 /*
