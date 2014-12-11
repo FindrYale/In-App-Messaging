@@ -4,7 +4,27 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"> 
+    
+     <TextView
+       android:id="@+id/textView0"
+       android:layout_width="wrap_content"
+       android:layout_height="35dp"
+       android:text="@string/text" />
      
+    <EditText android:id="@+id/edit_message"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="@string/edit_message"
+        android:inputType = "phone" 
+        android:imeOptions="actionDone"/>
+     
+     <EditText android:id="@+id/edit_message2"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:hint="@string/edit_message2"
+        android:inputType = "textCapSentences" 
+        android:imeOptions="actionDone"/>
+    
     <fragment         
           android:id="@+id/map"
           android:layout_width="match_parent"
