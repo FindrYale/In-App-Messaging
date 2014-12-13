@@ -42,14 +42,22 @@ import android.widget.TextView.OnEditorActionListener;
 
 
 public class MainActivity extends Activity {
+	
+//Please see Read Me File for full description of program functionality. In this part of the program we 
+//define global variables that are used throughout the program. 
+//The uncommon global variables include some uncommon object types that are described below: - 
+	//1. A LatLng is an object that contains 2 doubles that serve as the x, y coordinate 
+	//when a point is clicked on Google Maps. It comes defined with the Google Maps imports and library. 
+	//2. A button and a GoogleMap are identifiers used to call a defined button and googleMap 
+	// using the name given to it in the Activity-Main.xml file. 
+//Note full citations for every line of code can be found on the Developer Pages (that are linked on the ReadMe).On this file I will refer to these citations.  
 	static final LatLng oldCampus = new LatLng(41.3085 , -72.9285);
 	static final LatLng sterlingLatLng = new LatLng( 41.3113, -72.9291);
 	static final LatLng sillimanLatLng = new LatLng(41.310864, -72.924953);
 	static final double sterlingRadius = new Double(100);
 	static final LatLng brLatLng = new LatLng( 41.3098, -72.9298);
 	static final double brRadius = new Double(100);
-	//Double FinalLatitude = 0.0;
-	
+
 	Double[] testLat = {0.00041, 0.000608};
 	Double[] testLng = {0.001, 0.000413};
 	static final LatLng[] circleLatLng = {sterlingLatLng,brLatLng};
@@ -76,27 +84,42 @@ public class MainActivity extends Activity {
 	Button button;
 	String Locat = "";
 	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		//These next 2 lines  set up Firebase. First line, initializes the Firebase Library. 
+		//Second line creates a reference to the unique Firebase we have used. For introduction 
+		//to what is Firebase and how it is used in context of our app, please see ReadMe/Firebase. 
 		Firebase.setAndroidContext(this);
 		Firebase ref = new Firebase("https://fiery-heat-5866.firebaseio.com/");
 		
+		//This chunk of code calls from Firebase all the phone numbers stored on it. 
+		//The Value Event Listener 'listens' for a Data Snapshot, that is an object that detects all 
+		//the data stored on the Firebase at a point in time. 
 		ref.addValueEventListener(new ValueEventListener() {
 		    @Override
 		    public void onDataChange(DataSnapshot snapshot) {
 		         Object phoneN = snapshot.getValue();
-		      //  phoneNumber = outputNumbers.toString();
+		         //Here I create an object called phoneN that gets the values of the 
+		        //Data Snapshot from Firebase. In the next Line I convert this to a string in order 
+		         //the parse it. I parse this string using a method defined in the Circles Class 
+		         //and will call this String once a button is pressed. 
 		         phoneNumber = phoneN.toString();
 		        
 		  
 		    }
+		    //The below 3 lines are a try catch for Firebase which ensures if Firebase is 
+		    //unable to read, it returns an error message and does not crash. 
+		    //Note, app still works if phone is not connected to the internet. 
 		    @Override
 		    public void onCancelled(FirebaseError firebaseError) {
 		        System.out.println("The read failed: " + firebaseError.getMessage());
 		    }
 		});
+		//All the above Firebase Code has been retrieved from the Firebase developer page. 
 		
 		//Textbox to enter your number  
 		// EditText editMessage = (EditText) findViewById(R.id.edit_message);
