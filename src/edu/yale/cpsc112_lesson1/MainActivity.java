@@ -119,10 +119,15 @@ public class MainActivity extends Activity {
 		        System.out.println("The read failed: " + firebaseError.getMessage());
 		    }
 		});
-		//All the above Firebase Code has been retrieved from the Firebase developer page. 
+		//All the above Firebase Code has been retrieved from the Firebase developer pages called 
+		//Retrieving Data and Saving Data. 
 		
-		//Textbox to enter your number  
-		// EditText editMessage = (EditText) findViewById(R.id.edit_message);
+		//The code below brings up the Google Map, by calling on the ID it was given in the XML File. 
+		//We defined the Google Map through the XML file, and just call it here. 
+		//The try statement is to ensure that Java reads the Google Map that has been defined in the XML.
+		//The If statement looks to populate the defined Google Map, if it's empty with attributes 
+		//we define in the Main Acitvity. 
+		
 		try { 
 			if (googleMap == null) {
 				googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -139,25 +144,28 @@ public class MainActivity extends Activity {
 
 			LatLng[] circleLatLng = {sterlingLibrary.getCenter(), branfordCollege.getCenter()};
 			Double[] circleRad = {sterlingLibrary.getRadius(), branfordCollege.getRadius()};
-			//Firebase ref2 = new Firebase("https://fiery-fire-1683.firebaseio.com/");
-			//Firebase arraysRef1 = ref2.child("Child_Omegar");
-			//arraysRef1.setValue(circleLatLng);
-
-
-			//
+			//The lines below initialize the map to the view that we need.
+			//Move Camera is a pre written Google Map Method to move the camera to a defined a latlng 
+			//and a given level of zoom. The SetOnMapClick listens for a click on the Map. A click 
+			//is a predefined single touch of the screen, inside the google map. 
+			//If you run the program, you can see a mapclick registered on the logcat. The click 
+			//method takes a LatLng called point as its parameter.  
 			googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(oldCampus, 15));
 			googleMap.setOnMapClickListener(new OnMapClickListener () { 
 				public void onMapClick(LatLng point) {
 					Log.d("Map","Map clicked");
-					//LocationFinal = point.toString();
+					//Below I call a global LatLng Variable and then set it equal to point. 
+					//x and y are global doubles that store the x and y coordinates individually, as doubles. 
+					//The .latitude and .longitude function method calls convert to doubles. 
 					trialLocClick = point; 
 					x = trialLocClick.latitude;
 					y = trialLocClick.longitude;
-					//Firebase 
-					Firebase ref = new Firebase("https://fiery-heat-5866.firebaseio.com/");//Since this is its own method we define the same firebase reference again
-					//ref.child(itemLost).setValue(LocationFinal); //this is the main sender to Firebase 
-					//Firebase 	
-
+	
+					//All the Google map code except actually converting the clicked point 
+					//to a double were taken from the Google Maps Android Page 
+					//with the following particular pages: 
+					// - Interacting with the Map 
+					// - Setting up the Map 
 				}
 
 			}
@@ -165,7 +173,8 @@ public class MainActivity extends Activity {
 
 					);
 
-		} catch (Exception e) {
+		} catch (Exception e) {//the exception occurs if any XML attributes are wrong, and prevents the 
+			//program from crashing. 
 
 			e.printStackTrace();
 		}
@@ -227,68 +236,7 @@ public class MainActivity extends Activity {
 					myTextView.setText("Please select a valid location by clicking within one of the circles!");
 					}
 					
-				
-				/*
-				 * //Call Numbers from Firebase 
-						/* ref.child(keyValue).addValueEventListener(new ValueEventListener () {
-								public void onDataChange(DataSnapshot snapshot) {
-									Object outputObject = snapshot.getValue();
-
-										}
-
-
-								public void onCancelled(FirebaseError error) {
-
-								}
-						 });	
-
-				 */
-				//Test Method 
-
-				/*		 ref.child(keyValue).addValueEventListener(new ValueEventListener () {
-					public void onDataChange(DataSnapshot snapshot) {
-						Object outputObject = snapshot.getValue();
-						String outputLocation = outputObject.toString();
-
-		//THE FOR LOOP METHOD
-						int start = outputLocation.indexOf("-");
-						int next = outputLocation.indexOf(",");
-							next = next +11;
-
-						String outputLatitude = outputLocation.substring(start, start+10); 
-						String outputLongitude = outputLocation.substring(next, next+10);
-
-						 boolean inside = false;
-							int length = 2;
-							LatLng testLatLng;
-							double testRad;
-
-							for (int i= 0; i<length; i++) {
-								testLatLng = circleLatLng[i];	
-								testRad = circleRad[i];
-
-								double testX = (Double.parseDouble(outputLatitude) - testLatLng.latitude);
-								double testY = Double.parseDouble(outputLongitude) - testLatLng.longitude;
-								if (testX < testRad && testY < testRad) {
-									inside = true;
-									TextView myTextView = (TextView) findViewById(R.id.textView1);
-									myTextView.setText("True");
-									//TextView myTextView = (TextView) findViewById(R.id.textView1);
-									//myTextView.setText(LocationFinal);
-								}
-								else {
-									TextView myTextView = (TextView) findViewById(R.id.textView1);
-									myTextView.setText("False");
-								}
 							}
-
-							}
-					public void onCancelled(FirebaseError error) {
-
-					}
-
-				});*/
-			}
 				
 				try {
 					
