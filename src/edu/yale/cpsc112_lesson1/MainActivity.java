@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
 	static final LatLng brLatLng = new LatLng( 41.3098, -72.9298);
 	static final double brRadius = new Double(100);
 	//Double FinalLatitude = 0.0;
-
+	
 	Double[] testLat = {0.00041, 0.000608};
 	Double[] testLng = {0.001, 0.000413};
 	static final LatLng[] circleLatLng = {sterlingLatLng,brLatLng};
@@ -57,8 +57,10 @@ public class MainActivity extends Activity {
 	LatLng trialLocClick = new LatLng(41.3085 , -72.9285);
 	// LatLng trialLocClickRet = new LatLng(23, 25);
 	static final String keyValue = "";
-	String phoneNumber = "";
-
+	String n0 = "";
+	String phoneNumber = "asas";
+	String newNumber = "9174779589";
+	String itemLost2 = "";
 	private GoogleMap googleMap;
 	private Marker marker;
 	private LatLngBounds OLDCAMPUS = new LatLngBounds( 
@@ -68,18 +70,34 @@ public class MainActivity extends Activity {
 	Double y = 0.0;
 	String LocationFinal = "SAJ";
 	LatLng xyz;
+	
 	String itemLost = "";
 	String test ="";
 	Button button;
-
+	String Locat = "";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		Firebase.setAndroidContext(this);
 		Firebase ref = new Firebase("https://fiery-heat-5866.firebaseio.com/");
-
-
+		
+		ref.addValueEventListener(new ValueEventListener() {
+		    @Override
+		    public void onDataChange(DataSnapshot snapshot) {
+		         Object phoneN = snapshot.getValue();
+		      //  phoneNumber = outputNumbers.toString();
+		         phoneNumber = phoneN.toString();
+		        
+		  
+		    }
+		    @Override
+		    public void onCancelled(FirebaseError firebaseError) {
+		        System.out.println("The read failed: " + firebaseError.getMessage());
+		    }
+		});
+		
 		//Textbox to enter your number  
 		// EditText editMessage = (EditText) findViewById(R.id.edit_message);
 		try { 
@@ -131,7 +149,6 @@ public class MainActivity extends Activity {
 
 
 
-
 		button = (Button) findViewById(R.id.button);
 		button.setOnClickListener(new OnClickListener() {
 
@@ -141,7 +158,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				String phoneNumber2 =  editMessage.getText().toString();
-				String itemLost2 = 	editMessage2.getText().toString();
+				 itemLost2 = 	editMessage2.getText().toString();
 				String keyValue = phoneNumber2;
 				Firebase ref = new Firebase("https://fiery-heat-5866.firebaseio.com/");
 				//	Firebase latRef = ref.child(keyValue).child("Lat");
@@ -153,7 +170,7 @@ public class MainActivity extends Activity {
 				//	TextView myTextView = (TextView) findViewById(R.id.textView1);
 				//	myTextView.setText(phoneNumber2+itemLost2);
 
-				//Test Method
+
 				double x = trialLocClick.latitude;
 				double y = trialLocClick.longitude;
 				double testLatLng;
@@ -167,42 +184,27 @@ public class MainActivity extends Activity {
 						if (i == 0) {
 							TextView myTextView = (TextView) findViewById(R.id.textView1);
 							myTextView.setText("Your have selected Sterling Library");
+							Locat = "Sterling Library";
 							break;
+							
 
 						}
 						else if (i == 1){
 							TextView myTextView = (TextView) findViewById(R.id.textView1);
 							myTextView.setText("Your have selected Branford College");
+							Locat = "Branford College";
 							break;
 
 						}
-						 ref.child(keyValue).addValueEventListener(new ValueEventListener () {
-								public void onDataChange(DataSnapshot snapshot) {
-									Object outputObject = snapshot.getValue();
-										}
-								public void onCancelled(FirebaseError error) {
-
-								}
-
-							});
-					 try {
-							Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-						//	smsIntent.putExtra("address", createStringhere);
-						//	smsIntent.putExtra("sms_body", StringLocation);
-							smsIntent.setType("vnd.android-dir/mms-sms");
-							startActivity(smsIntent);
-						} catch (Exception e) {
-							Toast.makeText(getApplicationContext(), "SMS failed!",
-									Toast.LENGTH_LONG).show();
-							e.printStackTrace();
-						}
-
+						 
+						
 					}
 					else {
-						TextView myTextView = (TextView) findViewById(R.id.textView1);
-						myTextView.setText("False");
+					TextView myTextView = (TextView) findViewById(R.id.textView1);
+					myTextView.setText("Please select a valid location by clicking within one of the circles!");
 					}
-				}
+					
+				
 				/*
 				 * //Call Numbers from Firebase 
 						/* ref.child(keyValue).addValueEventListener(new ValueEventListener () {
@@ -264,8 +266,24 @@ public class MainActivity extends Activity {
 
 				});*/
 			}
-		});   
+				
+				try {
+					
+					Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+					smsIntent.putExtra("address", "9174779589");
+					smsIntent.putExtra("sms_body", "A " + itemLost2 + "has been lost at " + Locat + ". Please contact +" + phoneNumber2 + " to retrieve");
+					smsIntent.setType("vnd.android-dir/mms-sms");
+					startActivity(smsIntent);
+				} catch (Exception e) {
+					Toast.makeText(getApplicationContext(), "SMS failed!",
+							Toast.LENGTH_LONG).show();
+					e.printStackTrace();
+				}
+
+		};   
+	});
+	
+
 	}
-
-
+	
 }
