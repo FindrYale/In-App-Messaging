@@ -103,9 +103,9 @@ public class MainActivity extends Activity {
 		    @Override
 		    public void onDataChange(DataSnapshot snapshot) {
 		         Object phoneN = snapshot.getValue();
-		         //Here I create an object called phoneN that gets the values of the 
-		        //Data Snapshot from Firebase. In the next Line I convert this to a string in order 
-		         //the parse it. I parse this string using a method defined in the Circles Class 
+		         //Here we create an object called phoneN that gets the values of the 
+		        //Data Snapshot from Firebase. In the next Line we convert this to a string in order 
+		         //then parse it. We parse this string using a method defined in the Circles Class 
 		         //and will call this String once a button is pressed. 
 		         phoneNumber = phoneN.toString();
 		        
@@ -113,7 +113,7 @@ public class MainActivity extends Activity {
 		    }
 		    //The below 3 lines are a try catch for Firebase which ensures if Firebase is 
 		    //unable to read, it returns an error message and does not crash. 
-		    //Note, app still works if phone is not connected to the internet. 
+		    //Note, app still works if phone is not connected to the Internet. 
 		    @Override
 		    public void onCancelled(FirebaseError firebaseError) {
 		        System.out.println("The read failed: " + firebaseError.getMessage());
@@ -145,7 +145,7 @@ public class MainActivity extends Activity {
 			LatLng[] circleLatLng = {sterlingLibrary.getCenter(), branfordCollege.getCenter()};
 			Double[] circleRad = {sterlingLibrary.getRadius(), branfordCollege.getRadius()};
 			//The lines below initialize the map to the view that we need.
-			//Move Camera is a pre written Google Map Method to move the camera to a defined a latlng 
+			//Move Camera is a pre-written Google Map Method to move the camera to a defined a latlng 
 			//and a given level of zoom. The SetOnMapClick listens for a click on the Map. A click 
 			//is a predefined single touch of the screen, inside the google map. 
 			//If you run the program, you can see a mapclick registered on the logcat. The click 
@@ -207,11 +207,14 @@ public class MainActivity extends Activity {
 				double y = trialLocClick.longitude;
 				double testLatLng;
 				double testRad;
+				//building off the skills we learned in CPSC 112, we developed the following 
+				//for loop, which checks to see if the user has clicked within a valid circle
 				for (int i= 0; i<circleLatLng.length; i++) {
 					testRad = circleRad[i];
 					double testX = (x - circleLatLng[i].latitude);
 					double testY = (y - circleLatLng[i].longitude);
 
+					//the following if statement checks to see which circle the user clicked inside of.
 					if (Math.abs(testX) < 0.00041 && Math.abs(testY) < 0.00041) {
 						if (i == 0) {
 							TextView myTextView = (TextView) findViewById(R.id.textView1);
@@ -231,6 +234,7 @@ public class MainActivity extends Activity {
 						 
 						
 					}
+					//if the user did not click within a valid circle, fYndr alerts the user.
 					else {
 					TextView myTextView = (TextView) findViewById(R.id.textView1);
 					myTextView.setText("Please select a valid location by clicking within one of the circles!");
@@ -238,11 +242,13 @@ public class MainActivity extends Activity {
 					
 							}
 				
+				//the following try catch sends a text message with the input location, phone number and item description.
 				try {
-					
 					Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+					//the following line defines the recipient/recipients of the text message
 					smsIntent.putExtra("address", "9174779589");
-					smsIntent.putExtra("sms_body", "A " + itemLost2 + "has been lost at " + Locat + ". Please contact +" + phoneNumber2 + " to retrieve");
+					//the following line defines the body of the text message
+					smsIntent.putExtra("sms_body", "A " + itemLost2 + " has been lost at " + Locat + " . Please contact " + phoneNumber2 + " to retrieve.");
 					smsIntent.setType("vnd.android-dir/mms-sms");
 					startActivity(smsIntent);
 				} catch (Exception e) {
