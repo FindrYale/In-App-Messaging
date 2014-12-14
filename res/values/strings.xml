@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="send_button">Send</string>
     <string name= "textView0"></string>
-    <string name= "text">Hello! If this is your first time using fYndr, please input your phone number.</string>
+    <string name= "text"> fYndr! To find lost item, input phone number and description of lost item. Then click on the map once to identify last location of lost item. Click Send, wait for fYndry magic! </string>
     <string name= "edit_message">Enter Number Here</string>
     <string name= "edit_message2">Describe your lost item here</string>
     

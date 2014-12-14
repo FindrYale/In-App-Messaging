@@ -39,7 +39,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import com.google.android.gms.maps.MapFragment;
 import android.widget.TextView.OnEditorActionListener;
-
+//In this imports we call imports from Firebase Library and Google Maps Library. 
 
 public class MainActivity extends Activity {
 	
@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
 	static final double sterlingRadius = new Double(100);
 	static final LatLng brLatLng = new LatLng( 41.3098, -72.9298);
 	static final double brRadius = new Double(100);
-
+//The above our static final because the beta version comes pre-loaded with these locations. 
 	Double[] testLat = {0.00041, 0.000608};
 	Double[] testLng = {0.001, 0.000413};
 	static final LatLng[] circleLatLng = {sterlingLatLng,brLatLng};
@@ -194,15 +194,12 @@ public class MainActivity extends Activity {
 				 itemLost2 = 	editMessage2.getText().toString();
 				String keyValue = phoneNumber2;
 				Firebase ref = new Firebase("https://fiery-heat-5866.firebaseio.com/");
-				//	Firebase latRef = ref.child(keyValue).child("Lat");
-				//	Firebase lngRef = ref.child(keyValue).child("Lng");
 				ref.child(keyValue).setValue(itemLost2);
-				//ref.child(keyValue).setValue(y);
-				//latRef.child("Lat").setValue(x);
-				//lngRef.child("Lng").setValue(y);
-				//	TextView myTextView = (TextView) findViewById(R.id.textView1);
-				//	myTextView.setText(phoneNumber2+itemLost2);
-
+//Once the button is pressed, it sends the phoneNumber, which acts as a key Value or identifier
+//for the particular lost Item on Firebase. The Firebase ref is a unique reference to our Firebase.
+//The ref.child method creates a child (think of it as a unique tree) onto our Firebase node 
+//and sets that particular String to be equal to to the ItemLost2. These two lines of Firebase code 
+				//were taken from the Firebase webpage: Saving Data (see Citations for further info).
 
 				double x = trialLocClick.latitude;
 				double y = trialLocClick.longitude;
@@ -235,7 +232,9 @@ public class MainActivity extends Activity {
 						 
 						
 					}
-					//if the user did not click within a valid circle, fYndr alerts the user.
+					//if the user did not click within a valid circle, fYndr alerts the user. As explained 
+					//in ReadMe file (section: Future Goals), in future version User will be allowed to create his/her own Yale location.
+					//Further here we left stroke color of circle as black to show case functionality.
 					else {
 					TextView myTextView = (TextView) findViewById(R.id.textView1);
 					myTextView.setText("Please select a valid location by clicking within one of the circles!");
@@ -244,6 +243,7 @@ public class MainActivity extends Activity {
 							}
 				
 				//the following try catch sends a text message with the input location, phone number and item description.
+				//See citations: Android Developer SMS on RTF file.
 				try {
 					Intent smsIntent = new Intent(Intent.ACTION_VIEW);
 					//the following line defines the recipient/recipients of the text message
@@ -252,7 +252,7 @@ public class MainActivity extends Activity {
 					smsIntent.putExtra("sms_body", "A " + itemLost2 + " has been lost at " + Locat + " . Please contact " + phoneNumber2 + " to retrieve.");
 					smsIntent.setType("vnd.android-dir/mms-sms");
 					startActivity(smsIntent);
-				} catch (Exception e) {
+				} catch (Exception e) { // the catch condition watches out for cases where the input number is not right! 
 					Toast.makeText(getApplicationContext(), "SMS failed!",
 							Toast.LENGTH_LONG).show();
 					e.printStackTrace();

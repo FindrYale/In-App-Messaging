@@ -1,14 +1,11 @@
 {\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
 {\fonttbl\f0\fnil\fcharset0 Monaco;}
 {\colortbl;\red255\green255\blue255;}
-\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\margl1440\margr1440\vieww28600\viewh15520\viewkind0
 \deftab720
 \pard\pardeftab720
 
-\f0\fs22 \cf0 //Omegar Chavolla-Zacarias\
-//Abhinav Menon\
-//Saran Morgan\
-//Jack Weinberger\
+\f0\fs22 \cf0 Welcome to fYndry Team! \
 //fYndr Read Me\
 \
 fYndr is a lost-and-found app meant to utilize crowdsourcing methods to help users retrieve lost items. \
@@ -26,11 +23,15 @@ where, X represents the 10-digit phone number, Y represents the description of t
 \
 \ul Firebase\
 \ulnone \
+Firebase is an online data storage service, that is free for limited amounts of data. Our original goal of the app was to send location of the lost item, along with it\'92s description to Firebase,  retrieve it \
+as the app initializes, and prompt a user notification when a user would walk inside of the geo-fence for the app. \
+\
+A second use of Firebase, is to initialize the list of phone numbers of all users on our Firebase, so that they are able to receive a text notification with Lost Item Description + Loser\'92s phone No. + Location of lost device. Due to problems with mastering the retrieving data commands from Firebase, we had to forgo this in the version we have turned in for this semester. \
 \
 \ul What Went Wrong\ulnone \
-Unfortunately, our app does not send text messages to all the stored numbers. We were able to call the string of numbers from Firebase, and parse through the string to separate individual numbers. This made the app crash, however. We tried to resolve the issue by creating a new class called \'93Circles\'94 and writing the method there, but upon clicking send, we got an error saying \'93SMS failed!\'94 Therefore, for testing purposes, we added a static phone number, and, as of now, that is the only number that receive\'92s fYndr\'92s texts. Please feel free to look at the code in the class Circles.\
+Unfortunately, our app does not send text messages to all the stored numbers. We were able to call the string of numbers from Firebase, and parse through the string to separate individual numbers. This made the app crash, however. Upon numerous debugging attempts, we couldn\'92t effectively retrieve the data from Firebase in the way we had stored it. We tried to a brute force method, using what we have learnt in class, to retrieve all the data in Firebase as one massive string, then parse it for phone numbers. This method is visible in Circles.java, a separate class, and was supposed to be called in the field where we input the recipients of the text message. However even this led to the catch exception: - we got an error saying \'93SMS failed!\'94 Therefore, for testing purposes, we added a static phone number, and, as of now, that is the only number that receive\'92s fYndr\'92s texts. Please feel free to look at the code in the class Circles.\
 \
-One of our biggest issues was not being able to create username and password classes. This would have allowed us to fix the mechanics of storing phone numbers with unique push-IDs to Firebase. This would have been very helpful and convenient, as a user would not have to enter a phone number every time, but due to time constraints and programming logistics, we were unable to get this to work.\
+One of our biggest issues was not being able to create username and password classes. This would have allowed us to fix the mechanics of storing phone numbers with unique push-IDs to Firebase. This would have been very helpful and convenient, as a user would not have to enter a phone number every time, but due to in-familiarity with creating new classes and not completely comprehending this concept, we deemed it wasn\'92t absolutely necessary for testing the app\'92s basic functionality. \
 \
 \ul Pivots\ulnone \
 During the development process, there were two added functionalities (geofences and push notifications) that we pursued, but decided to leave out of the version we have turned in. \
@@ -51,15 +52,34 @@ In a future version, the app would only call back from Firebase the phone number
 \
 The app would also eventually allow for user-based input, so if a valid location does not yet exist for the location where a user lost an item, the user could create the location him/herself. \
 \
-\ul Sources\ulnone \
+\ul Goals for next semester - fYndry 2.0:\
+\ulnone The main goal for the next semester, and to increase the functionality is to effectively retrieve data from Firebase. Whilst we actually now understand how to retrieve the data from Firebase (without having to \
+use the Brute Force Method) as the original object, we weren\'92t able to incorporate into this version, due to the difficulties in debugging. To retrieve data from Firebase (see retrieving data:Firebase in links below) we had to know some advanced concepts, especially Object Classes, and possibly Maps. Extra reading up about this led to operational inefficiency in moving forward with the app in this semester\'92s time constraints. However since we partially understand how these work, and Chapter 8 of the Textbook being the first thing Professor Abadi will teach in Semester 2, we hope that within a month of next semester, we will be able add \
+the required Firebase functionality. \
+\
+The second functionality we want to allow is for users to add Yale Locations not currently stored on Firebase. Currently our app, in beta, only allows for 2 locations. However ideally users should be able to \
+add Yale Locations, through an additional page on the app and administrators can approve the entry on Firebase, if it\'92s a valid Yale Location. \
+\
+\
+\ul Sources\
+\ulnone Note about citations: all the code we have used from other sources, have been cited with URL below. To not overload our main activity Java file with too much textual information, since this is something \
+we want to work on in the future, we have simply mentioned for example: \'93see Google Maps-Interacting with Maps Developer Page.\'94 The actual links can be found below. \
+\
 https://developer.android.com/reference/com/google/android/gms/maps/model/Circle.html\
 https://developer.android.com/reference/com/google/android/gms/maps/model/CircleOptions.html\
 https://developer.android.com/google/gcm/\
 http://developer.android.com/training/location/geofencing.html\
 https://developers.google.com/maps/documentation/android/\
-https://developers.google.com/maps/documentation/android/interactivity\
-https://developers.google.com/maps/documentation/android/utility/setup\
+{\field{\*\fldinst{HYPERLINK "http://developer.android.com/reference/com/google/android/gms/maps/model/LatLng.html"}}{\fldrslt http://developer.android.com/reference/com/google/android/gms/maps/model/LatLng.html}} (Instructions for using LatLng)\
+{\field{\*\fldinst{HYPERLINK "https://developers.google.com/maps/documentation/android/location"}}{\fldrslt https://developers.google.com/maps/documentation/android/location}} (Using Google Map Location Data)\
+https://developers.google.com/maps/documentation/android/interactivity (Interacting with Google Map)\
+https://developers.google.com/maps/documentation/android/utility/setup (Setting up Google Map)\
 http://developer.android.com/reference/android/telephony/SmsManager.html\
+{\field{\*\fldinst{HYPERLINK "https://www.firebase.com/docs/android/guide/saving-data.html"}}{\fldrslt https://www.firebase.com/docs/android/guide/saving-data.html}} (Firebase Saving Data Page)\
+{\field{\*\fldinst{HYPERLINK "https://www.firebase.com/docs/android/guide/retrieving-data.html"}}{\fldrslt https://www.firebase.com/docs/android/guide/retrieving-data.html}} (Firebase Retrieving Data Page - the especially annoying one)\
+{\field{\*\fldinst{HYPERLINK "https://www.firebase.com/docs/android/guide/user-auth.html"}}{\fldrslt https://www.firebase.com/docs/android/guide/user-auth.html}} (Relevant instructions for setting up User Authetication)\
 \
+\
+THANK YOU FOR READING! \
 \
 }

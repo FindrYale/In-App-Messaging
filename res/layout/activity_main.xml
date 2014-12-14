@@ -8,7 +8,7 @@
      <TextView
        android:id="@+id/textView0"
        android:layout_width="wrap_content"
-       android:layout_height="35dp"
+       android:layout_height="70dp"
        android:text="@string/text" />
      
     <EditText android:id="@+id/edit_message"
@@ -40,6 +40,6 @@
        android:id="@+id/textView1"
        android:layout_width="wrap_content"
        android:layout_height="50dp"
-       android:text="@string/text" />
+       android:text="@string/textView0" />
   
 </LinearLayout>
