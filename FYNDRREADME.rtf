@@ -1,0 +1,65 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf0 //Omegar Chavolla-Zacarias\
+//Abhinav Menon\
+//Saran Morgan\
+//Jack Weinberger\
+//fYndr Read Me\
+\
+fYndr is a lost-and-found app meant to utilize crowdsourcing methods to help users retrieve lost items. \
+The app\'92s UI consists of two textfields (editText), a google map, a send button and a textView.\
+\
+\pard\pardeftab720
+\cf0 \ul \ulc0 Description of Functionality\ulnone \
+Each time the app is opened, a user is asked to input his/her 10-digit phone number and a short description of the lost item. Then, the user taps a point on a map to indicate where he/she thinks he/she lost the item. For beta purposes, fYndr comes preloaded with two valid locations: Sterling Library and Branford College. On the map, the user can see two circles, one surrounding each valid location. The user must click inside an existing location for the app to work. Clicking outside a valid location will print to the textView the message \'93Please select a valid location by clicking within one of the circles!\'94 In order for fYndr to check to see if a user has clicked within a circle, it calculates the distance between the point the user has clicked and the point at the center of the circle. If the difference is less than the radius of the circle, the user is within the circle.\ul  \ulnone \
+\
+When the user clicks send, the app sends to Firebase 1) the user\'92s phone number as a string, 2) the location on the map of the item as a LatLng, and 3) the description of the item so they can be called back later. Upon clicking send, the app also calls from Firebase all phone numbers previously stored by other users, and sends the following text to all retrieved numbers:\
+\
+\'93A Y has been lost at W. Please contact X to retrieve\'94\
+\
+where, X represents the 10-digit phone number, Y represents the description of the lost item and W represents the location where the item was lost.\
+\
+\ul Firebase\
+\ulnone \
+\
+\ul What Went Wrong\ulnone \
+Unfortunately, our app does not send text messages to all the stored numbers. We were able to call the string of numbers from Firebase, and parse through the string to separate individual numbers. This made the app crash, however. We tried to resolve the issue by creating a new class called \'93Circles\'94 and writing the method there, but upon clicking send, we got an error saying \'93SMS failed!\'94 Therefore, for testing purposes, we added a static phone number, and, as of now, that is the only number that receive\'92s fYndr\'92s texts. Please feel free to look at the code in the class Circles.\
+\
+One of our biggest issues was not being able to create username and password classes. This would have allowed us to fix the mechanics of storing phone numbers with unique push-IDs to Firebase. This would have been very helpful and convenient, as a user would not have to enter a phone number every time, but due to time constraints and programming logistics, we were unable to get this to work.\
+\
+\ul Pivots\ulnone \
+During the development process, there were two added functionalities (geofences and push notifications) that we pursued, but decided to leave out of the version we have turned in. \
+\
+Geofences work much like the circles that we ended up developing. They can be created around any point on a map, and can call methods when a user enters or exits them in real life. \
+\
+Our intention was for fYndr to take the point at which a user indicates he/she lost an item, and create a geofence of a certain radius around that point when the user clicked the send button. The geofence would be stored on a database, and would be accessible by all other users. fYndr would then constantly be checking the user\'92s location, and if the user\'92s location was within any created geofence, the app would print the message: \'93X lost a Y nearby! Help find the item!\'94\
+Where, X represents the 10-digit string of the user who had created the database, and Y represents the description of the lost item. \
+\
+Following instructions and examples from developer.android.com, we tried for several weeks to get geofences to work. Unfortunately, we realized that geofences would require the use of a separate database from the one we are already working with, and are beyond the scope of what we wanted to do for this version of the app. Therefore, we decided instead to use circles to define an item\'92s location.\
+\
+Before deciding to have the app send text messages to users, we had considered using push notifications to alert other users when a user had posted a lost item. However, like with geofences, we realized that push notifications were beyond the scope of our app. They required working with other databases as well, and we did not need them for fYndr\'92s functionality. Therefore, we decided to develop an ams-messaging system instead.\
+\
+\ul In Sum\ulnone \
+Through the processes described, fYndr builds a network of users by storing phone numbers, and places item-losers in contact with the network in order to reduce the time it takes to find lost items. The more people use the app, the easier it should be to get lost items returned to their owners, and the more likely it would be that your lost item is returned to you.\
+\
+In a future version, the app would only call back from Firebase the phone numbers of people nearby, so that only people who are actually within the item\'92s vicinity and who can help retrieve it are alerted. \
+\
+The app would also eventually allow for user-based input, so if a valid location does not yet exist for the location where a user lost an item, the user could create the location him/herself. \
+\
+\ul Sources\ulnone \
+https://developer.android.com/reference/com/google/android/gms/maps/model/Circle.html\
+https://developer.android.com/reference/com/google/android/gms/maps/model/CircleOptions.html\
+https://developer.android.com/google/gcm/\
+http://developer.android.com/training/location/geofencing.html\
+https://developers.google.com/maps/documentation/android/\
+https://developers.google.com/maps/documentation/android/interactivity\
+https://developers.google.com/maps/documentation/android/utility/setup\
+http://developer.android.com/reference/android/telephony/SmsManager.html\
+\
+\
+}

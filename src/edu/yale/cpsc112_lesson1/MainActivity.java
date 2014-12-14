@@ -43,7 +43,8 @@ import android.widget.TextView.OnEditorActionListener;
 
 public class MainActivity extends Activity {
 	
-//Please see Read Me File for full description of program functionality. In this part of the program we 
+//Please see the rich text file "FYNDRREADME" - NOTE, NOT "README" - for full description of program functionality. 
+//In this part of the program we 
 //define global variables that are used throughout the program. 
 //The uncommon global variables include some uncommon object types that are described below: - 
 	//1. A LatLng is an object that contains 2 doubles that serve as the x, y coordinate 
